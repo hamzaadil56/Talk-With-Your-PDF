@@ -1,7 +1,7 @@
 import streamlit as st
 from streamlit_chat import message
 from langchain_core.messages import AIMessage, HumanMessage
-from learnfromyourpdf.main import KnowledgeRetriever
+from main import KnowledgeRetriever
 import tempfile
 import pathlib
 import os
