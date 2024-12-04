@@ -10,3 +10,4 @@ python-dotenv
 protobuf
 langchain-huggingface
 tf-keras
+chromadb
