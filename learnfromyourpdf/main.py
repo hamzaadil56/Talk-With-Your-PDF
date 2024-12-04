@@ -1,6 +1,6 @@
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_chroma import Chroma
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -10,7 +10,7 @@ import os
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
@@ -31,15 +31,16 @@ class KnowledgeRetriever:
         self.chunks = pages
         vectorstore = Chroma.from_documents(
             documents=pages,
-            embedding=OpenAIEmbeddings(),
+            embedding=HuggingFaceEmbeddings(
+                model_name="sentence-transformers/all-mpnet-base-v2"),
         )
         self.retriever = vectorstore.as_retriever()
 
-    def create_vectorstore(self):
-        self.vectorstore = Chroma.from_documents(
-            documents=self.chunks,
-            embedding=OpenAIEmbeddings(),
-        )
+    # def create_vectorstore(self):
+    #     self.vectorstore = Chroma.from_documents(
+    #         documents=self.chunks,
+    #         embedding=OpenAIEmbeddings(),
+    #     )
 
     # def create_retriever(self):
     #     self.retriever = self.vectorstore.as_retriever()
