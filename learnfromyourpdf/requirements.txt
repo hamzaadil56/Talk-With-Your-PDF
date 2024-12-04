@@ -11,3 +11,4 @@ protobuf
 langchain-huggingface
 tf-keras
 chromadb
+sqlite>=3.36.0
