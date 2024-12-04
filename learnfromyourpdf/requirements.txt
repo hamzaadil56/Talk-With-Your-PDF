@@ -11,4 +11,3 @@ protobuf
 langchain-huggingface
 tf-keras
 chromadb
-sqlite
