@@ -1,10 +1,10 @@
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
 import os
 
@@ -29,7 +29,7 @@ class KnowledgeRetriever:
         loader = PyPDFLoader(self.file_path)
         pages = loader.load_and_split()
         self.chunks = pages
-        vectorstore = Chroma.from_documents(
+        vectorstore = FAISS.from_documents(
             documents=pages,
             embedding=HuggingFaceEmbeddings(
                 model_name="sentence-transformers/all-mpnet-base-v2"),

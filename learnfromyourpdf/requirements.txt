@@ -2,7 +2,6 @@ langchain
 langchain-community
 pypdf
 langchain-text-splitters
-langchain-chroma
 langchain-openai
 langchain-groq
 streamlit-chat
@@ -10,4 +9,4 @@ python-dotenv
 protobuf
 langchain-huggingface
 tf-keras
-chromadb
+faiss-cpu
