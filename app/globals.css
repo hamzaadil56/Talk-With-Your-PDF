@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/*
+  "Reading Room" — an editorial, paper-and-ink aesthetic.
+  Warm off-white stock, deep walnut ink, a vermilion accent like a librarian's
+  stamp. Distinctive display serif (Fraunces) over a humanist sans (Hanken
+  Grotesk), with a mono used for marginalia/metadata.
+*/
+
+@theme inline {
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-hanken);
+  --font-mono: var(--font-mono-jb);
+
+  --color-paper: #f4eee2;
+  --color-paper-2: #efe7d7;
+  --color-ink: #211b14;
+  --color-ink-soft: #5b5142;
+  --color-line: #d9cdb6;
+  --color-accent: #c2410c;
+  --color-accent-2: #b58a3c;
+  --color-card: #fbf7ee;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  min-height: 100dvh;
+}
+
+/* Paper grain + a faint warm vignette for atmosphere. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+      1200px 700px at 78% -8%,
+      rgba(181, 138, 60, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(900px 600px at 0% 100%, rgba(194, 65, 12, 0.07), transparent 55%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+main,
+header,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-paper);
+}
+
+/* Thin rule used as an editorial divider. */
+.hairline {
+  border-top: 1px solid var(--color-line);
+}
+
+/* Staggered entrance for the hero. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  animation: blink 1.2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+    opacity: 1;
+  }
+  .dot {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Markdown answer typography. */
+.prose-answer {
+  line-height: 1.7;
+}
+.prose-answer p {
+  margin: 0 0 0.85rem;
+}
+.prose-answer p:last-child {
+  margin-bottom: 0;
+}
+.prose-answer strong {
+  color: var(--color-ink);
+  font-weight: 650;
+}
+.prose-answer ul,
+.prose-answer ol {
+  margin: 0 0 0.85rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.prose-answer ul {
+  list-style: disc;
+}
+.prose-answer ol {
+  list-style: decimal;
+}
+.prose-answer code {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85em;
+  background: var(--color-paper-2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+.prose-answer pre {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  margin: 0 0 0.85rem;
+}
+.prose-answer pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
